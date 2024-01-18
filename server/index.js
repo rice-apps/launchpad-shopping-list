@@ -30,25 +30,38 @@ app.get("/getAll", (req, res, next) => {
 })
 
 
-
 // ROUTE #2 - Add a new shopping item
-
-
-
+app.post("/add", (req, res, next) => {
+    database.push({id: database.length + 1, ...req.body})
+    res.json(database)
+})
 
 // ROUTE #3 - Remove an existing shopping item
-
-
-
+app.delete("/remove", (req, res, next) => {
+    let newDatabase = database.filter((item) =>
+        item.name != req.body.name 
+    )
+    database = newDatabase
+    res.json(database)
+})
 
 // ROUTE #4 - Update an existing shopping item (harder)
-
-
+app.put("/update", (req, res, next) => {
+    let idx = database.findIndex((item) => item.name == req.body.existingName)
+    console.log(idx)
+    database[idx].name = req.body.newName
+    database[idx].category = req.body.newCategory
+    res.json(database)
+})
 
 
 // ROUTE #5 - Get shopping items that satisfy a condition/filter (harder)
-
-
+app.get("/getByCat", (req, res, next) => {
+    let filteredDatabase = database.filter((item) => 
+        item.category == req.query.category
+    )
+    res.json(filteredDatabase)
+})
 
 
 

@@ -16,13 +16,11 @@ function App() {
 
   // Make HTTP request to /getAll endpoint
   const getAll = async () => {
-    console.log("getting all items...")
     try {
       // GET Request
       const response = await axios.get(BASE_URL + "/getAll")
         .then((response) => {
-          console.log(response)
-          // Update the state with the fetched data
+          // make sure to use the response to update the 'items' state!
           setItems(response.data)
           
         }).catch(() => {
@@ -33,35 +31,101 @@ function App() {
       // Handle any errors
       console.error('Failed to fetch data: ', error);
     }
-
-
-
-
-    // make sure to use the response to update the 'items' state!
-    
   }
 
   // Make HTTP request to /add endpoint
   const add = async (params) => {
-    console.log("adding item...", params)
+    try {
+      // GET Request
+      const response = await axios.post(BASE_URL + "/add", {
+        name: params["name"],
+        category: params["category"]
+      })
+        .then((response) => {
+          // make sure to use the response to update the 'items' state!
+          setItems(response.data)
+
+        }).catch(() => {
+
+        })
+
+    } catch (error) {
+      // Handle any errors
+      console.error('Failed to fetch data: ', error);
+    }
 
   }
 
   // Make HTTP request to /delete endpoint
   const remove = async (params) => {
-    console.log("deleting item...", params)
+    try {
+      const response = await axios.delete(BASE_URL + "/remove", {
+        data: {
+          name: params["existingName"],
+        }
+      })
+        .then((response) => {
+          // make sure to use the response to update the 'items' state!
+          setItems(response.data)
+
+        }).catch(() => {
+
+        })
+
+    } catch (error) {
+      // Handle any errors
+      console.error('Failed to fetch data: ', error);
+    }
+    
 
   }
 
   // Make HTTP request to /update endpoint
   const update = async (params) => {
-    console.log("updating item...", params)
+    try {
+      const response = await axios.put(BASE_URL + "/update", {
+          existingName: params["existingName"],
+          newName: params["newName"],
+          newCategory: params["newCategory"],
+        }
+      )
+        .then((response) => {
+          console.log(response)
+          // make sure to use the response to update the 'items' state!
+          setItems(response.data)
+
+        }).catch(() => {
+
+        })
+
+    } catch (error) {
+      // Handle any errors
+      console.error('Failed to fetch data: ', error);
+    }
 
   }
 
   // Make HTTP request to /getByCat endpoint
   const getByCat = async (params) => {
-    console.log("getting item by cat...", params)
+    try {
+      // GET Request
+      const response = await axios.get(BASE_URL + "/getByCat", { 
+        params: {
+          category: params["category"],
+        }
+      })
+        .then((response) => {
+          // make sure to use the response to update the 'items' state!
+          setItems(response.data)
+
+        }).catch(() => {
+
+        })
+
+    } catch (error) {
+      // Handle any errors
+      console.error('Failed to fetch data: ', error);
+    }
 
   }
 
