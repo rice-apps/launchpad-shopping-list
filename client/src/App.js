@@ -2,9 +2,12 @@ import { useState } from 'react'
 import './App.css';
 import { Radio, Form, Input, Select, Space, Button, List, Typography } from 'antd'
 
+import axios from "axios"
+
 function App() {
-  const [items, setItems] = useState([
-  ])
+  const BASE_URL = "http://localhost:3000" 
+
+  const [items, setItems] = useState([])
 
   const [action, setAction] = useState('getAll');
   const handleActionChange = (e) => {
@@ -12,8 +15,25 @@ function App() {
   };
 
   // Make HTTP request to /getAll endpoint
-  const getAll = () => {
+  const getAll = async () => {
     console.log("getting all items...")
+    try {
+      // GET Request
+      const response = await axios.get(BASE_URL + "/getAll")
+        .then((response) => {
+          console.log(response)
+          // Update the state with the fetched data
+          setItems(response.data)
+          
+        }).catch(() => {
+
+        })
+        	
+			} catch (error) {
+      // Handle any errors
+      console.error('Failed to fetch data: ', error);
+    }
+
 
 
 
@@ -22,25 +42,25 @@ function App() {
   }
 
   // Make HTTP request to /add endpoint
-  const add = (params) => {
+  const add = async (params) => {
     console.log("adding item...", params)
 
   }
 
   // Make HTTP request to /delete endpoint
-  const remove = (params) => {
+  const remove = async (params) => {
     console.log("deleting item...", params)
 
   }
 
   // Make HTTP request to /update endpoint
-  const update = (params) => {
+  const update = async (params) => {
     console.log("updating item...", params)
 
   }
 
   // Make HTTP request to /getByCat endpoint
-  const getByCat = (params) => {
+  const getByCat = async (params) => {
     console.log("getting item by cat...", params)
 
   }
