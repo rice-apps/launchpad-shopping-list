@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css';
 import { Radio, Form, Input, Select, Space, Button, List, Typography } from 'antd'
 
@@ -10,6 +10,12 @@ function App() {
   const [items, setItems] = useState([])
 
   const [action, setAction] = useState('getAll');
+
+  // This function is called as soon as the page loads
+  useEffect(() => {
+    getAll()
+  }, [])
+
   const handleActionChange = (e) => {
     setAction(e.target.value);
   };
